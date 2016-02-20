@@ -6,22 +6,13 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get clean \
     && apt-get update -y \
     && apt-get dist-upgrade -y \
+    && apt-get install -y devscripts \
     && apt-get clean \
     && apt-get autoremove -y --purge \
     && rm -rf /var/lib/apt/lists/*
 
-ENV INSTALL_PKGS devscripts git-buildpackage
-
 RUN apt-get update -y \
-    && apt-get install -y $INSTALL_PKGS \
-    && apt-get clean \
-    && apt-get autoremove -y --purge \
-    && rm -rf /var/lib/apt/lists/*
-
-ENV INSTALL_EXTRA_PKGS bash-completion vim git-dpm dh-make
-
-RUN apt-get update -y \
-    && apt-get install -y $INSTALL_EXTRA_PKGS \
+    && apt-get install -y bash-completion vim git-dpm dh-make \
     && apt-get clean \
     && apt-get autoremove -y --purge \
     && rm -rf /var/lib/apt/lists/*
