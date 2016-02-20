@@ -1,5 +1,7 @@
 include mk/env.mk
 
+default:
+
 docker-images:
 	make -C docker/ all
 
@@ -22,4 +24,4 @@ docker-sulogin:
 docker-sulogin-%:
 	@make docker-sulogin DOCKER_IMG=$(DOCKER_IMG):$(@:docker-sulogin-%=%)
 
-.PHONY: docker-images docker-run docker-sulogin
+.PHONY: default docker-images docker-run docker-sulogin
