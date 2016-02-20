@@ -19,4 +19,7 @@ docker-sulogin:
 		DOCKER_PRIV=true \
 		DOCKER_CMD='/bin/bash --rcfile /build/.sulogin'
 
+docker-sulogin-%:
+	@make docker-sulogin DOCKER_IMG=$(DOCKER_IMG):$(@:docker-sulogin-%=%)
+
 .PHONY: docker-images docker-run docker-sulogin
