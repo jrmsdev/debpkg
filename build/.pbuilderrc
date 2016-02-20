@@ -1,0 +1,6 @@
+DISTRIBUTION=sid
+BASETGZ=/build/.pbuilder/base.tgz
+BASEPATH=/build/.pbuilder/base.cow
+BUILDPLACE=/build/.pbuilder/build
+BUILDRESULT=/build/.pbuilder/result/
+APTCACHE="/build/.pbuilder/aptcache/"
