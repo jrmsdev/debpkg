@@ -8,6 +8,7 @@ docker-images:
 docker-run:
 	docker run --rm -it --user $(DOCKER_USER) \
 		--privileged=$(DOCKER_PRIV) \
+		-e LOGNAME=$(shell id -un) \
 		-e USER=$(shell id -un) \
 		-e DOCKER_IMG=$(DOCKER_IMG) \
 		-v $(PWD)/build:/build $(DOCKER_IMG) $(DOCKER_CMD)
