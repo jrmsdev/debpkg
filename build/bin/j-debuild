@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+debuild -us -uc -b --lintian-opts -I --pedantic
+debuild clean

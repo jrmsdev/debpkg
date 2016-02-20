@@ -25,3 +25,4 @@ if ! shopt -oq posix; then
 fi
 
 export PAGER=less
+export PATH=/build/bin:$PATH
