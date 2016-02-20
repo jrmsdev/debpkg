@@ -5,6 +5,7 @@ docker-images:
 
 docker-run:
 	docker run --rm -it --user $(DOCKER_USER) \
+		--privileged=$(DOCKER_PRIV) \
 		-e USER=$(shell id -un) \
 		-e DOCKER_IMG=$(DOCKER_IMG) \
 		-v $(PWD)/build:/build $(DOCKER_IMG) $(DOCKER_CMD)
@@ -15,6 +16,7 @@ docker-run-%:
 
 docker-sulogin:
 	@make docker-run DOCKER_USER=0:0 \
+		DOCKER_PRIV=true \
 		DOCKER_CMD='/bin/bash --rcfile /build/.sulogin'
 
 .PHONY: docker-images docker-run docker-sulogin
