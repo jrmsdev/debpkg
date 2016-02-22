@@ -4,4 +4,5 @@
 .lesshst
 .pbuilder/*
 pkg/*
+tmp/
 .viminfo
