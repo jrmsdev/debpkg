@@ -1,2 +1,2 @@
 #!/bin/bash
-lintian --info --display-info --display-experimental --pedantic $@
+lintian --display-info --display-experimental --pedantic $@
