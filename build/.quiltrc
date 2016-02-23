@@ -1,0 +1,3 @@
+EDITOR=vim
+QUILT_PATCHES=debian/patches
+QUILT_SERIES=debian/patches/series
