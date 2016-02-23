@@ -13,6 +13,7 @@ RUN apt-get clean \
 
 RUN apt-get update -y \
     && apt-get install -y bash-completion vim git-dpm dh-make dh-systemd \
+       quilt \
     && apt-get clean \
     && apt-get autoremove -y --purge \
     && rm -rf /var/lib/apt/lists/*
