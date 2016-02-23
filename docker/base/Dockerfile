@@ -12,7 +12,7 @@ RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update -y \
-    && apt-get install -y bash-completion vim git-dpm dh-make \
+    && apt-get install -y bash-completion vim git-dpm dh-make dh-systemd \
     && apt-get clean \
     && apt-get autoremove -y --purge \
     && rm -rf /var/lib/apt/lists/*
