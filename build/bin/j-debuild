@@ -1,4 +1,10 @@
 #!/bin/bash
 set -e
+test -d debian/patches && {
+    quilt push -a
+}
 debuild -us -uc -b --lintian-opts -I --pedantic
 debuild clean
+test -d debian/patches && {
+    quilt pop -a
+}
