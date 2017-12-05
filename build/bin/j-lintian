@@ -1,2 +1,0 @@
-#!/bin/bash
-lintian --display-info --display-experimental --pedantic $@

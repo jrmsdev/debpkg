@@ -1,26 +1,31 @@
-include mk/env.mk
+PKG ?= ERRNOPKG
+BUILD_DIR != realpath ./build
+PKG_DIR := $(BUILD_DIR)/$(PKG)
 
-default:
+.PHONY: default
+default: build
 
-docker-images:
-	make -C docker/ all
+.PHONY: _checkpkg
+_checkpkg:
+	@test -d $(PKG_DIR) || \
+			(echo '$(PKG): invalid package name - use PKG=name'; exit 1)
 
-docker-run:
-	docker run --rm -it --user $(DOCKER_USER) \
-		-e LOGNAME=$(shell id -un) \
-		-e USER=$(shell id -un) \
-		-e DOCKER_IMG=$(DOCKER_IMG) \
-		-v $(PWD)/build:/build $(DOCKER_IMG) $(DOCKER_CMD)
+.PHONY: vmup
+vmup:
+	@vagrant up
 
-# http://www.gnu.org/software/make/manual/make.html#Text-Functions
-docker-run-%:
-	@make docker-run DOCKER_IMG=$(DOCKER_IMG):$(@:docker-run-%=%)
+.PHONY: vmhalt
+vmhalt:
+	@vagrant halt
 
-docker-sulogin:
-	@make docker-run DOCKER_USER=0:0 \
-		DOCKER_CMD='/bin/bash --rcfile /build/.sulogin'
+.PHONY: vmst
+vmst:
+	@vagrant status
 
-docker-sulogin-%:
-	@make docker-sulogin DOCKER_IMG=$(DOCKER_IMG):$(@:docker-sulogin-%=%)
+.PHONY: check
+check:
+	@vagrant validate
 
-.PHONY: default docker-images docker-run docker-sulogin
+.PHONY: build
+build: _checkpkg
+	@vagrant ssh -t -c 'cd /build/$(PKG) && sbuild -A'

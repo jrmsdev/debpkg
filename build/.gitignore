@@ -1,8 +1,1 @@
-.bash_history
-.gitconfig
-.gnupg/
-.lesshst
-.pbuilder/*
-pkg/*
-tmp/
-.viminfo
+*
