@@ -31,7 +31,8 @@ Vagrant.configure("2") do |config|
         export DEBIAN_FRONTEND=noninteractive
         apt-get install -y --no-install-recommends --purge \
                 git-dpm dh-make dh-systemd quilt pristine-tar vim-tiny \
-                fakeroot lintian sbuild schroot python3-setuptools debootstrap
+                fakeroot lintian sbuild schroot python3-setuptools \
+                debootstrap devscripts less python3-venv apt-cacher-ng
         apt-get clean
         apt-get autoremove -y --purge
     SHELL
@@ -40,7 +41,7 @@ Vagrant.configure("2") do |config|
         sbuild-adduser vagrant
         sbuild-createchroot sid /srv/chroot/unstable-amd64 \
                 --alias=unstable --alias=UNRELEASED \
-                http://deb.debian.org/debian
+                http://127.0.0.1:3142/deb.debian.org/debian
         cp /usr/share/doc/sbuild/examples/example.sbuildrc \
                 /home/vagrant/.sbuildrc
     SHELL

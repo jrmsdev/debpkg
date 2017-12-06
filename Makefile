@@ -10,17 +10,21 @@ _checkpkg:
 	@test -d $(PKG_DIR) || \
 			(echo '$(PKG): invalid package name - use PKG=name'; exit 1)
 
-.PHONY: vmup
-vmup:
+.PHONY: up
+up:
 	@vagrant up
 
-.PHONY: vmhalt
-vmhalt:
+.PHONY: halt
+halt:
 	@vagrant halt
 
-.PHONY: vmst
-vmst:
+.PHONY: st
+st:
 	@vagrant status
+
+.PHONY: ssh
+ssh:
+	@vagrant ssh
 
 .PHONY: check
 check:
