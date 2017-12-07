@@ -3,7 +3,7 @@ BUILD_DIR != realpath ./build
 PKG_DIR := $(BUILD_DIR)/$(PKG)
 
 .PHONY: default
-default: build
+default: sbuild
 
 .PHONY: _checkpkg
 _checkpkg:
@@ -12,24 +12,37 @@ _checkpkg:
 
 .PHONY: up
 up:
-	@vagrant up
+	vagrant up
 
 .PHONY: halt
 halt:
-	@vagrant halt
+	vagrant halt
 
 .PHONY: st
 st:
-	@vagrant status
+	vagrant status
 
 .PHONY: ssh
 ssh:
-	@vagrant ssh
+	vagrant ssh
 
 .PHONY: check
 check:
-	@vagrant validate
+	vagrant validate
 
-.PHONY: build
-build: _checkpkg
-	@vagrant ssh -t -c 'cd /build/$(PKG) && sbuild -A'
+.vagrant/ssh-config:
+	vagrant ssh-config >.vagrant/ssh-config
+
+.PHONY: pull
+pull: _checkpkg .vagrant/ssh-config
+	rsync -vax --delete-before -e 'ssh -F .vagrant/ssh-config' \
+			default:/build/$(PKG)/ ./build/$(PKG)/
+
+.PHONY: sync
+sync:
+	vagrant rsync
+
+.PHONY: sbuild
+sbuild: _checkpkg sync
+	vagrant ssh -t -c 'cd /build/$(PKG) && sbuild -A --run-lintian'
+	vagrant ssh -t -c 'cd /build/$(PKG) && lintian --display-info --display-experimental --pedantic `ls -tr ../*.dsc | tail -n 1`'
